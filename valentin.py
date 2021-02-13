@@ -1,4 +1,5 @@
 import io
+import logging
 import os
 
 import discord
@@ -52,5 +53,13 @@ async def _valentin(ctx: SlashContext, member: discord.Member):
                 allowed_mentions=discord.AllowedMentions(users=True),
                 file=discord.File(tempio, filename="flameheart.jpg")
             )
+    lover_role = ctx.guild.get_role(int(os.getenv("ROLE_ID")))
+    try:
+        if lover_role not in ctx.author.roles:
+            await ctx.author.add_roles(lover_role)
+        if lover_role not in member.roles:
+            await member.add_roles(lover_role)
+    except discord.Forbidden:
+        logging.warning("Cannot add lover role for guild {}".format(repr(ctx.guild)))
 
 client.run(os.getenv("TOKEN"))
