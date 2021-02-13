@@ -1,9 +1,18 @@
+import io
 import os
 
 import discord
 from discord_slash import SlashCommand, SlashContext, SlashCommandOptionType
 from discord_slash.utils import manage_commands
 from dotenv import load_dotenv
+from PIL import Image, ImageDraw, ImageFont
+
+
+FONT_SIZE = 63
+TO_POSITION = (130, 699)
+FROM_POSITION = (110, 777)
+TEXT_COLOR = "#ef5ba7"
+JPEG_QUALITY = 90
 
 
 load_dotenv()
@@ -27,7 +36,21 @@ slash = SlashCommand(client, auto_register=True)
 
 )
 async def _valentin(ctx: SlashContext, member: discord.Member):
-    msg = "{} déclare sa flamme à {} !".format(ctx.author.mention, member.mention)
-    await ctx.send(content=msg, allowed_mentions=discord.AllowedMentions(users=True))
+    await ctx.send(5)
+    with Image.open("res/template.jpg") as image:
+        font = ImageFont.truetype("res/clegane.ttf", FONT_SIZE)
+        draw = ImageDraw.Draw(image)
+        draw.text(FROM_POSITION, ctx.author.display_name, fill=TEXT_COLOR, font=font)
+        draw.text(TO_POSITION, member.display_name, fill=TEXT_COLOR, font=font)
+
+        with io.BytesIO() as tempio:
+            image.save(tempio, "jpeg", quality=JPEG_QUALITY)
+            tempio.seek(0)
+            msg = "{} déclare sa flamme à {} !".format(ctx.author.mention, member.mention)
+            await ctx.channel.send(
+                content=msg,
+                allowed_mentions=discord.AllowedMentions(users=True),
+                file=discord.File(tempio, filename="flameheart.jpg")
+            )
 
 client.run(os.getenv("TOKEN"))
