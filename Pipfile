@@ -8,6 +8,7 @@ name = "pypi"
 discord-py-slash-command = "*"
 python-dotenv = "*"
 pillow = "*"
+python-i18n = "*"
 
 [dev-packages]
 
