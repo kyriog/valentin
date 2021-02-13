@@ -1,6 +1,7 @@
 import io
 import logging
 import os
+import re
 
 import discord
 from discord_slash import SlashCommand, SlashContext, SlashCommandOptionType
@@ -22,6 +23,7 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 slash = SlashCommand(client, auto_register=True)
+nick_levels = re.compile(r" ([📙🐀⌛💰🐓💀🎣🏆💎🏅][0-9]{1,3})+$")
 
 
 @slash.slash(
@@ -36,18 +38,21 @@ slash = SlashCommand(client, auto_register=True)
     guild_ids=guild_ids,
 
 )
-async def _valentin(ctx: SlashContext, member: discord.Member):
+async def _valentin(ctx: SlashContext, recipient: discord.Member):
     await ctx.send(5)
+    sender = ctx.author
     with Image.open("res/template.jpg") as image:
         font = ImageFont.truetype("res/clegane.ttf", FONT_SIZE)
         draw = ImageDraw.Draw(image)
-        draw.text(FROM_POSITION, ctx.author.display_name, fill=TEXT_COLOR, font=font)
-        draw.text(TO_POSITION, member.display_name, fill=TEXT_COLOR, font=font)
+        sender_display_name = nick_levels.sub("", sender.display_name)
+        recipient_display_name = nick_levels.sub("", recipient.display_name)
+        draw.text(FROM_POSITION, sender_display_name, fill=TEXT_COLOR, font=font)
+        draw.text(TO_POSITION, recipient_display_name, fill=TEXT_COLOR, font=font)
 
         with io.BytesIO() as tempio:
             image.save(tempio, "jpeg", quality=JPEG_QUALITY)
             tempio.seek(0)
-            msg = "{} déclare sa flamme à {} !".format(ctx.author.mention, member.mention)
+            msg = "{} déclare sa flamme à {} !".format(sender.mention, recipient.mention)
             await ctx.channel.send(
                 content=msg,
                 allowed_mentions=discord.AllowedMentions(users=True),
@@ -55,10 +60,10 @@ async def _valentin(ctx: SlashContext, member: discord.Member):
             )
     lover_role = ctx.guild.get_role(int(os.getenv("ROLE_ID")))
     try:
-        if lover_role not in ctx.author.roles:
-            await ctx.author.add_roles(lover_role)
-        if lover_role not in member.roles:
-            await member.add_roles(lover_role)
+        if lover_role not in sender.roles:
+            await sender.add_roles(lover_role)
+        if lover_role not in recipient.roles:
+            await recipient.add_roles(lover_role)
     except discord.Forbidden:
         logging.warning("Cannot add lover role for guild {}".format(repr(ctx.guild)))
 
