@@ -13,8 +13,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 FONT_SIZE = 63
-TO_POSITION = (130, 699)
-FROM_POSITION = (110, 777)
+POSITIONS = {
+    "fr": {"from": (110, 777), "to": (130, 699)},
+    "es": {"from": (110, 777), "to": (130, 699)},
+    "it": {"from": (110, 777), "to": (80, 699)},
+}
 TEXT_COLOR = "#ef5ba7"
 JPEG_QUALITY = 90
 
@@ -40,8 +43,8 @@ async def _valentin(ctx: SlashContext, recipient: discord.Member):
         draw = ImageDraw.Draw(image)
         sender_display_name = nick_levels.sub("", sender.display_name)
         recipient_display_name = nick_levels.sub("", recipient.display_name)
-        draw.text(FROM_POSITION, sender_display_name, fill=TEXT_COLOR, font=font)
-        draw.text(TO_POSITION, recipient_display_name, fill=TEXT_COLOR, font=font)
+        draw.text(POSITIONS[lang]["from"], sender_display_name, fill=TEXT_COLOR, font=font)
+        draw.text(POSITIONS[lang]["to"], recipient_display_name, fill=TEXT_COLOR, font=font)
 
         with io.BytesIO() as tempio:
             image.save(tempio, "jpeg", quality=JPEG_QUALITY)

@@ -12,5 +12,12 @@
     "member": "membre",
     "Member whom your heart burns to": "Membre à qui déclarer votre flamme",
     "%{sender}’s heart burns for %{recipient}!": "%{sender} déclare sa flamme à %{recipient} !"
+  },
+  "it": {
+    "valentine": "valentino",
+    "Declare your burning heart to another member!": "Dichiara il tuo amore ad una persona!",
+    "member": "membro",
+    "Member whom your heart burns to": "Persona per cui ti arde il cuore",
+    "%{sender}’s heart burns for %{recipient}!": "Il cuore di %{sender} arde forte per %{recipient}!"
   }
 }
