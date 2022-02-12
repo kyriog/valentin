@@ -36,9 +36,15 @@ font_unavailable_chars = re.compile(r"[^A-Za-z0-9 !#$%&\'\(\)*+,\-̣\./:;?@\[\\\
 
 
 async def _valentin(ctx: SlashContext, recipient: discord.Member):
-    await ctx.defer()
     sender = ctx.author
     lang = os.getenv("LANG_{}".format(ctx.guild.id))
+    msg = i18n.t(
+        "%{sender}’s heart burns for %{recipient}!",
+        sender=sender.mention,
+        recipient=recipient.mention,
+        locale=lang
+    )
+    await ctx.send(content=msg, allowed_mentions=discord.AllowedMentions(users=True))
     with Image.open("res/templates/{}.jpg".format(lang)) as image:
         font = ImageFont.truetype("res/clegane.ttf", FONT_SIZE)
         draw = ImageDraw.Draw(image)
@@ -54,12 +60,8 @@ async def _valentin(ctx: SlashContext, recipient: discord.Member):
         with io.BytesIO() as tempio:
             image.save(tempio, "jpeg", quality=JPEG_QUALITY)
             tempio.seek(0)
-            msg = i18n.t(
-                "%{sender}’s heart burns for %{recipient}!",
-                sender=sender.mention,
-                recipient=recipient.mention,
-                locale=lang
-            )
+            ctx.responded = False
+            ctx.deferred = True
             await ctx.send(
                 content=msg,
                 allowed_mentions=discord.AllowedMentions(users=True),
