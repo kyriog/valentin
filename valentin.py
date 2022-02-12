@@ -32,6 +32,7 @@ intents.members = True
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 nick_levels = re.compile(r" ([📙🐀⌛💰🐓💀🎣🏆💎🏅][0-9]{1,3})+$")
+font_unavailable_chars = re.compile(r"[^A-Za-z0-9 !#$%&\'\(\)*+,\-̣\./:;?@\[\\\]\^\{\}\ ­ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ\‘\’]")
 
 
 async def _valentin(ctx: SlashContext, recipient: discord.Member):
@@ -42,7 +43,11 @@ async def _valentin(ctx: SlashContext, recipient: discord.Member):
         font = ImageFont.truetype("res/clegane.ttf", FONT_SIZE)
         draw = ImageDraw.Draw(image)
         sender_display_name = nick_levels.sub("", sender.display_name)
+        sender_display_name = font_unavailable_chars.sub("", sender_display_name)
+        sender_display_name = sender_display_name.strip()
         recipient_display_name = nick_levels.sub("", recipient.display_name)
+        recipient_display_name = font_unavailable_chars.sub("", recipient_display_name)
+        recipient_display_name = recipient_display_name.strip()
         draw.text(POSITIONS[lang]["from"], sender_display_name, fill=TEXT_COLOR, font=font)
         draw.text(POSITIONS[lang]["to"], recipient_display_name, fill=TEXT_COLOR, font=font)
 
