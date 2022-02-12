@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 "discord.py" = "*"
-discord-py-slash-command = "*"
+discord-py-slash-command = "~=1.0"
 python-dotenv = "*"
 pillow = "*"
 python-i18n = "*"

@@ -35,7 +35,7 @@ nick_levels = re.compile(r" ([📙🐀⌛💰🐓💀🎣🏆💎🏅][0-9]{1,3}
 
 
 async def _valentin(ctx: SlashContext, recipient: discord.Member):
-    await ctx.respond(eat=True)
+    await ctx.defer()
     sender = ctx.author
     lang = os.getenv("LANG_{}".format(ctx.guild.id))
     with Image.open("res/templates/{}.jpg".format(lang)) as image:
