@@ -87,7 +87,8 @@ for guild_id in guild_ids:
             option_type=SlashCommandOptionType.USER,
             required=True
         )],
-        guild_ids=[guild_id]
+        guild_ids=[guild_id],
+        connector={i18n.t("member"): "recipient"}
     )
 
 bot.run(os.getenv("TOKEN"))
