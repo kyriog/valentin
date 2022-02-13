@@ -1,10 +1,10 @@
 {
   "es": {
-    "valentine": "valentín",
-    "Declare your burning heart to another member!": "Declara tu corazón ardiente hacia otro miembro!",
+    "valentine": "amor",
+    "Declare your burning heart to another member!": "Declara tu llama a otro pirata",
     "member": "miembro",
     "Member whom your heart burns to": "Usuario por el que tu corazón arde",
-    "%{sender}’s heart burns for %{recipient}!": "El corazón de %{sender} se quema por %{recipient}"
+    "%{sender}’s heart burns for %{recipient}!": "%{sender} declara su llama a %{recipent}"
   },
   "fr": {
     "valentine": "valentin",
