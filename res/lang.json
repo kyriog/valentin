@@ -19,5 +19,12 @@
     "member": "membro",
     "Member whom your heart burns to": "Persona per cui ti arde il cuore",
     "%{sender}’s heart burns for %{recipient}!": "Il cuore di %{sender} arde forte per %{recipient}!"
+  },
+  "br": {
+    "valentine": "valentin",
+    "Declare your burning heart to another member!": "Declare seu fogo para outro membro",
+    "member": "membro",
+    "Member whom your heart burns to": "Member whom your heart burns to",
+    "%{sender}’s heart burns for %{recipient}!": "%{sender} mandou um correio elegante para %{recipient}"
   }
 }
