@@ -26,5 +26,12 @@
     "member": "membro",
     "Member whom your heart burns to": "Member whom your heart burns to",
     "%{sender}’s heart burns for %{recipient}!": "%{sender} mandou um correio elegante para %{recipient}"
+  },
+  "de": {
+    "valentine": "valentin",
+    "Declare your burning heart to another member!": "Vergib deine Flamme an eine andere Person",
+    "member": "mitglied",
+    "Member whom your heart burns to": "Member whom your heart burns to",
+    "%{sender}’s heart burns for %{recipient}!": "%{sender} verschenkt seine Flamme an %{recipient}"
   }
 }
